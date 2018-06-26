@@ -6,13 +6,12 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 19:38:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 17:55:12 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:56:09 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-# define MULTI int i = 0; t_vert new_vert; double *new_vert_ind[4]; int diff = 1;
+#define MULTI int i = 0; t_vert new_vert; double *new_vert_ind[4]; int diff = 1;
 
 // gets row & col data from 2d source
 

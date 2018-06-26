@@ -6,15 +6,17 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/15 08:31:27 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 18:05:34 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:41:04 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+# include <stdlib.h>
+# define FDF_H
 # define WIN_W	1440
 # define WIN_H	900
-#include <stdlib.h>
+# define II trans_mat
 
 typedef struct	s_vert
 {
@@ -129,11 +131,13 @@ int				read_file(int fd, t_map *map);
 int				error_check(t_envars *env);
 int				idx(int row, int col, int dim, int diff);
 t_vert			m_v_mult(t_trmat m, t_vert vec);
-t_trmat			trans_mat(double x_shift, double y_shift, double z_shift, int diff);
+t_trmat			trans_mat(double x_shift, double y_shift,
+					double z_shift, int diff);
 t_trmat			x_rot_mat(double theta, int transpose, int diff);
 t_trmat			y_rot_mat(double theta, int transpose, int diff);
 t_trmat			z_rot_mat(double theta, int transpose, int diff);
-t_trmat			scale_mat(double x_scale, double y_scale, double z_scale, int diff);
+t_trmat			scale_mat(double x_scale, double y_scale,
+					double z_scale, int diff);
 int				init_img(t_envars *env, t_line *cpy);
 void			img_pixel_put(t_image *img, double x, double y, int color);
 void			clear_img(t_image *img);

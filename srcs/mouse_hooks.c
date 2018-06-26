@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/16 19:39:09 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 18:09:35 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:57:00 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	mouse_setup(t_envars *env, t_mouse *new_mouse, t_line *cpy)
 		new_mouse->y = 0;
 	}
 }
-
 
 int		init_mouse(t_envars *env, t_line *cpy)
 {

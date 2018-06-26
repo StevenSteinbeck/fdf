@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 19:37:51 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 17:55:08 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 19:16:55 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@
 #define RENDER_TWO int diff = 1;
 #define POS_XY position_verts(env); map_w = env->map.width;
 #define POS_XY_TWO row = env->map.height;
+#define POSXY POS_XY; POS_XY_TWO;
 #define VERT t_vert res; t_vert curr_vert; double mid_map_w; double mid_map_h;
-#define XFORM VERT; double	mid_map_z; int diff;
+#define XFORM VERT; double	mid_map_z; int diff = 0; int x0 = 32;
+#define NEW t_line l; int diff = 0;
+#define VERTS t_vert res; int row; int col; int	map_w;
+#define RENDRR RENDER; RENDER_TWO; head = malloc(sizeof(t_line));
 
 // Center map at (0,0)
 // Z must be scaled
@@ -28,29 +32,30 @@
 // ply transformations
 // color
 
-static t_vert	xform(t_envars *env, t_map *map, int row, int col, t_line *head)
+static t_vert	xform(t_envars *env, t_map *map, int row, int col)
 {
 	XFORM;
 	if (error_check(env) != 1)
 		exit(1);
 	diff = 1;
-	head->x0 = 32;
-	mid_map_w = (double)(map->width - 1) / 2 + head->x0 - 32;
-	mid_map_h = (double)(map->height - 1) / 2 + head->x0 - 32;
-	mid_map_z = (double)(map->max_z + map->min_z) / 2 + head->x0 - 32;
-	head->dec_pcnt = mid_map_z;
+	mid_map_w = (double)(map->width - 1) / 2 + x0 - 32;
+	mid_map_h = (double)(map->height - 1) / 2 + x0 - 32;
+	mid_map_z = (double)(map->max_z + map->min_z) / 2 + x0 - 32;
 	curr_vert = map->verts[idx(row, col, map->width, diff)];
-	res = m_v_mult(trans_mat(-mid_map_w, -mid_map_h, -mid_map_z, diff), curr_vert);
+	res = m_v_mult(trans_mat(-mid_map_w,
+				-mid_map_h, -mid_map_z, diff), curr_vert);
 	if (error_check(env) == 1)
 	{
-		res = m_v_mult(scale_mat(env->x_sca, env->y_sca, env->z_sca, diff), res);
+		res = m_v_mult(scale_mat(env->x_sca,
+					env->y_sca, env->z_sca, diff), res);
 		res = m_v_mult(x_rot_mat(env->x_rot, 0, diff), res);
 		res = m_v_mult(y_rot_mat(env->y_rot, 0, diff), res);
 		res = m_v_mult(z_rot_mat(env->z_rot, 0, diff), res);
 		res = m_v_mult(trans_mat((WIN_W / 2), (WIN_H / 2), 0, diff), res);
-		res = m_v_mult(trans_mat(env->x_shift, env->y_shift, env->z_shift, diff), res);
+		res = m_v_mult(trans_mat(env->x_shift,
+					env->y_shift, env->z_shift, diff), res);
 		res.color = calc_vert_color(env, map, curr_vert);
-	}	
+	}
 	return (res);
 }
 
@@ -92,10 +97,7 @@ static t_line	init_line(t_vert p1, t_vert p2, int diff)
 
 static void		draw_line(t_envars *env, t_vert p1, t_vert p2)
 {
-	t_line	l;
-	int		diff;
-
-	diff = 0;
+	NEW;
 	l = init_line(p1, p2, diff);
 	while (error_check(env) == 1)
 	{
@@ -125,13 +127,10 @@ static void		draw_line(t_envars *env, t_vert p1, t_vert p2)
 
 static void		position_verts(t_envars *env)
 {
-	t_vert	res;
-	int		row;
-	int		col;
-	int		map_w;
 	t_line	*head;
 	int		diff;
 
+	VERTS;
 	diff = 1;
 	head = malloc(sizeof(t_line));
 	map_w = env->map.width;
@@ -142,7 +141,7 @@ static void		position_verts(t_envars *env)
 		col = map_w;
 		while (--col > -1 && error_check(env))
 		{
-			res = xform(env, &env->map, row, col, head);
+			res = xform(env, &env->map, row, col);
 			env->map.xverts[idx(row, col, map_w, diff)] = res;
 			img_pixel_put(&env->image, res.x, res.y, res.color);
 		}
@@ -155,25 +154,25 @@ static void		position_verts(t_envars *env)
 // draws a line to surrounding vertices if possible
 // puts new transformations to the screen
 
-int			render(t_envars *env)
+int				render(t_envars *env)
 {
-	RENDER;
-	RENDER_TWO;
-	head = malloc(sizeof(t_line));
+	RENDRR;
 	clear_img(&env->image);
-	POS_XY;
-	POS_XY_TWO;
+	POSXY;
 	head->x0 = 0;
 	while (--row > -1 && head != 0)
 	{
 		col = map_w;
-		while (--col > -1 && head != 0 && head->x0++ <= 2147483647 && error_check(env) == 1)
+		while (--col > -1 && head != 0 &&
+				head->x0++ <= 2147483647 && error_check(env) == 1)
 		{
 			res = env->map.xverts[idx(row, col, map_w, diff)];
 			if (row + 1 < env->map.height)
-				draw_line(env, res, env->map.xverts[idx(row + 1, col, map_w, diff)]);
+				draw_line(env, res, env->map.xverts[idx(row +
+							1, col, map_w, diff)]);
 			if (col + 1 < map_w && head)
-				draw_line(env, res, env->map.xverts[idx(row, col + 1, map_w, diff)]);
+				draw_line(env, res, env->map.xverts[idx(row,
+							col + 1, map_w, diff)]);
 		}
 		head->x0++;
 	}

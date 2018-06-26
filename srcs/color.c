@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 19:37:27 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 14:56:34 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:39:17 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ int			color_lint(int c1, int c2, double decimal_percent)
 		return (c2);
 	while (x < 1)
 	{
-		r = (int)ft_lint(((c1 >> 16) & 0xFF), ((c2 >> 16) & 0xFF), decimal_percent);
-		g = (int)ft_lint(((c1 >> 8) & 0xFF), ((c2 >> 8) & 0xFF), decimal_percent);
+		r = (int)ft_lint(((c1 >> 16) & 0xFF),
+				((c2 >> 16) & 0xFF), decimal_percent);
+		g = (int)ft_lint(((c1 >> 8) & 0xFF),
+				((c2 >> 8) & 0xFF), decimal_percent);
 		b = (int)ft_lint((c1 & 0xFF), (c2 & 0xFF), decimal_percent);
 		if (x == 0)
 			x++;

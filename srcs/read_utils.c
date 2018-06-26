@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 13:10:01 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 17:55:53 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 19:15:37 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 #include <libft.h>
 #include "fdf.h"
 
-# define GET_LINES ssize_t ret; t_list *new; char *line;
-# define TWO SHORTER; SHORTERTWO;
-# define SHORTER head->x1 = (int)ft_num_words(line, ' '); ft_lstadd(llst, new);
-# define SHORTERTWO map->height++; ft_strdel(&line);
-# define FREE free(head); return (free_lst_or_map(llst, NULL));
-# define CALC map->width * map->height
-# define MAP_SETUP line_lst = NULL; head->err = 0; map->width = -1; map->height = 0;
-# define FILL_INIT int row; int col; char **split; t_list *cur_elem;
-# define FILL_TWO cur_elem = llst; row = (m->height - 1); head = malloc(sizeof(t_line));
-# define START t_line *head; FILL_INIT; FILL_TWO;
+#define GET_LINES ssize_t ret; t_list *new; char *line;
+#define TWO SHORTER; SHORTERTWO;
+#define SHORTER head->x1 = (int)ft_num_words(line, ' '); ft_lstadd(llst, new);
+#define SHORTERTWO map->height++; ft_strdel(&line);
+#define FREE free(head); return (free_lst_or_map(llst, NULL));
+#define CALC map->width * map->height
+#define MAP_H map->height = 0
+#define MAP_SETUP line_lst = NULL; head->err = 0; map->width = -1; MAP_H;
+#define FILL_INIT int row; int col; char **split; t_list *cur_elem;
+#define HEAD head = malloc(sizeof(t_line))
+#define FILL_TWO cur_elem = llst; row = (m->height - 1); HEAD;
+#define START t_line *head; FILL_INIT; FILL_TWO;
 
 static int		free_lst_or_map(t_list **lst, t_map *map)
 {
@@ -40,7 +42,7 @@ static int		free_lst_or_map(t_list **lst, t_map *map)
 			ft_memdel(&(*lst)->content);
 			ft_memdel((void **)lst);
 			*lst = next;
-			head->err++;;
+			head->err++;
 		}
 	}
 	head->sy = 1;
@@ -81,7 +83,7 @@ static int		get_lines(int fd, t_list **llst, t_map *map, t_line *head)
 	return (0);
 }
 
-static t_vert	gen_vert(int row, int col, char *z_str, t_map *m, t_line *head)
+static t_vert	gen_vert(int row, int col, char *z_str, t_map *m)
 {
 	t_vert	new_v;
 
@@ -90,12 +92,9 @@ static t_vert	gen_vert(int row, int col, char *z_str, t_map *m, t_line *head)
 	{
 		new_v.x = (double)col;
 		new_v.y = (double)row;
-		head->x0 = ft_atoi(z_str);
 		new_v.w = 1;
 		new_v.color = 0x00FFFFFF;
-		head->color = 0;
 		m->max_z = (new_v.z > m->max_z) ? new_v.z : m->max_z;
-		head->x1 = m->max_z;
 		m->min_z = (new_v.z < m->min_z) ? new_v.z : m->min_z;
 	}
 	return (new_v);
@@ -116,7 +115,7 @@ static int		fill_map(t_map *m, t_list *llst)
 		}
 		while (col < m->width && head->dy-- >= -2147483648)
 		{
-			m->verts[row * m->width + col] = gen_vert(row, col, split[col], m, head);
+			m->verts[row * m->width + col] = gen_vert(row, col, split[col], m);
 			col++;
 		}
 		ft_splitdel(&split);

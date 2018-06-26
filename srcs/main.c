@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/17 12:11:38 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 17:55:16 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:38:01 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void		setup_env(t_envars *env, int style, t_line *cpy)
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, WIN_W, WIN_H, "stestein - FdF - 42");
 	if ((init_img(env, cpy)) != 1)
-		exit (1);
+		exit(1);
 	if ((init_mouse(env, cpy)) != 1)
-		exit (1);
+		exit(1);
 	env->z_sca = 25;
 	env->color_style = 0;
 	env->c_max = 0xFFFFFF;

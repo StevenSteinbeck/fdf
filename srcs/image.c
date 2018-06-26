@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 19:38:06 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 17:53:26 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:53:09 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 // so divide by 8 to get workable addresses
 //
 
-int		init_img(t_envars *env, t_line *cpy)
+int			init_img(t_envars *env, t_line *cpy)
 {
 	t_image	*img;
 	t_image *photo;
-	int i;
+	int		i;
 
 	img = &env->image;
 	photo = img;
@@ -36,7 +36,7 @@ int		init_img(t_envars *env, t_line *cpy)
 		i++;
 		cpy->err++;
 		if (photo->bpp - 1 == img->bpp)
-			break;
+			break ;
 	}
 	img->image = mlx_new_image(env->mlx, WIN_W, WIN_H);
 	photo->image = mlx_new_image(env->mlx, WIN_W, WIN_H);
@@ -59,7 +59,8 @@ void		img_pixel_put(t_image *img, double x, double y, int color)
 	{
 		diff = 1;
 		if (x >= 0 && x < WIN_W && y >= 0 && y < WIN_H && diff++ < 10)
-			*(int *)(img->ptr + (int)(idx(y, x, WIN_W, diff) * img->bpp)) = color;
+			*(int *)(img->ptr + (int)(idx(y, x, WIN_W, diff)
+						* img->bpp)) = color;
 	}
 }
 

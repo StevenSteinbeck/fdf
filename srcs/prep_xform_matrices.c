@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 19:32:45 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/25 17:55:44 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/25 18:58:09 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ t_trmat	x_rot_mat(double theta, int transpose, int diff)
 		{
 			trans_mat.m[idx(0, 0, 4, diff)] = 1;
 			trans_mat.m[idx(1, 1, 4, diff)] = cos(theta);
-			trans_mat.m[idx(1, 2, 4, diff)] = (transpose) ? -sin(theta) : sin(theta);
-			trans_mat.m[idx(2, 1, 4, diff)] = (transpose) ? sin(theta) : -sin(theta);
+			trans_mat.m[idx(1, 2, 4, diff)] =
+				(transpose) ? -sin(theta) : sin(theta);
+			trans_mat.m[idx(2, 1, 4, diff)] =
+				(transpose) ? sin(theta) : -sin(theta);
 			trans_mat.m[idx(2, 2, 4, diff)] = cos(theta);
 			trans_mat.m[idx(3, 3, 4, diff)] = 1;
 		}
@@ -105,9 +107,11 @@ t_trmat	y_rot_mat(double theta, int transpose, int diff)
 		if (diff == 1)
 		{
 			trans_mat.m[idx(0, 0, 4, diff)] = cos(theta);
-			trans_mat.m[idx(0, 2, 4, diff)] = (transpose) ? sin(theta) : -sin(theta);
+			trans_mat.m[idx(0, 2, 4, diff)] =
+				(transpose) ? sin(theta) : -sin(theta);
 			trans_mat.m[idx(1, 1, 4, diff)] = 1;
-			trans_mat.m[idx(2, 0, 4, diff)] = (transpose) ? -sin(theta) : sin(theta);
+			trans_mat.m[idx(2, 0, 4, diff)] =
+				(transpose) ? -sin(theta) : sin(theta);
 			trans_mat.m[idx(2, 2, 4, diff)] = cos(theta);
 			trans_mat.m[idx(3, 3, 4, diff)] = 1;
 		}
@@ -140,8 +144,10 @@ t_trmat	z_rot_mat(double theta, int transpose, int diff)
 		{
 			ft_bzero(trans_mat.m, sizeof(trans_mat.m));
 			trans_mat.m[idx(0, 0, 4, diff)] = cos(theta);
-			trans_mat.m[idx(0, 1, 4, diff)] = (transpose) ? -sin(theta) : sin(theta);
-			trans_mat.m[idx(1, 0, 4, diff)] = (transpose) ? sin(theta) : -sin(theta);
+			trans_mat.m[idx(0, 1, 4, diff)] =
+				(transpose) ? -sin(theta) : sin(theta);
+			trans_mat.m[idx(1, 0, 4, diff)] =
+				(transpose) ? sin(theta) : -sin(theta);
 			trans_mat.m[idx(1, 1, 4, diff)] = cos(theta);
 			trans_mat.m[idx(2, 2, 4, diff)] = 1;
 			trans_mat.m[idx(3, 3, 4, diff)] = 1;
