@@ -1,6 +1,6 @@
-# fdf vector mapping tool
-# OSx gcc minilib graphic implementation
-This program interprets and draws an interactive map from rows and columns of data.
+# FDF
+Mac OS and gcc minilib graphic implementation
+This program interprets and draws an interactive map from rows and columns of data. See Example Maps.
 
 To use:
 1. Download the fdf folder and place it on your desktop
